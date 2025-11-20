@@ -3,38 +3,47 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional
+from contextlib import asynccontextmanager
 import time
 from operations import calculate, DivisionByZeroError, InvalidOperationError
 from logger_config import setup_logging, get_logger
+from database import init_db
+from users import router as users_router
 
 # Initialize logging
 logger = setup_logging()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan event handler for startup and shutdown events"""
+    # Startup
+    logger.info("FastAPI Application starting...")
+    init_db()
+    logger.info("Database initialized successfully")
+    logger.info("FastAPI Application started successfully")
+    logger.info("API Documentation available at: /docs")
+    logger.info("API Health check available at: /health")
+    logger.info("User endpoints available at: /users")
+    
+    yield
+    
+    # Shutdown
+    logger.info("FastAPI Application shutting down...")
+
+
 app = FastAPI(
-    title="FastAPI Calculator",
-    description="A simple calculator API built with FastAPI",
-    version="1.0.0"
+    title="FastAPI Application with User Management",
+    description="A FastAPI application with calculator and user management features",
+    version="2.0.0",
+    lifespan=lifespan
 )
+
+# Include user router
+app.include_router(users_router)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# Log application startup
-logger.info("FastAPI Calculator application starting...")
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Log application startup"""
-    logger.info("FastAPI Calculator application started successfully")
-    logger.info("API Documentation available at: /docs")
-    logger.info("API Health check available at: /health")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Log application shutdown"""
-    logger.info("FastAPI Calculator application shutting down...")
 
 
 @app.middleware("http")
@@ -92,11 +101,16 @@ async def api_info():
     """API information endpoint"""
     logger.info("API info endpoint accessed")
     return {
-        "message": "Welcome to FastAPI Calculator API!",
+        "message": "Welcome to FastAPI Application!",
+        "version": "2.0.0",
         "endpoints": {
             "/": "Calculator web interface",
             "/docs": "API documentation",
-            "/calculate": "Perform calculations"
+            "/calculate": "Perform calculations",
+            "/users": "User management endpoints",
+            "/users/register": "Register new user",
+            "/users/login": "User login",
+            "/health": "Health check"
         }
     }
 

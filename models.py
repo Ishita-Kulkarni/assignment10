@@ -1,0 +1,38 @@
+"""
+SQLAlchemy models for the application.
+"""
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy.sql import func
+from database import Base
+
+
+class User(Base):
+    """
+    User model for storing user information.
+    
+    Attributes:
+        id: Primary key, auto-incrementing integer
+        username: Unique username for the user
+        email: Unique email address for the user
+        password_hash: Hashed password (never store plain text passwords)
+        created_at: Timestamp when the user was created
+        updated_at: Timestamp when the user was last updated
+        is_active: Flag to indicate if the user account is active
+    """
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    username = Column(String(50), unique=True, index=True, nullable=False)
+    email = Column(String(100), unique=True, index=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    is_active = Column(Boolean, default=True, nullable=False)
+
+    def __repr__(self):
+        """String representation of User model."""
+        return f"<User(id={self.id}, username='{self.username}', email='{self.email}')>"
+
+    def __str__(self):
+        """Human-readable string representation."""
+        return f"User: {self.username} ({self.email})"
