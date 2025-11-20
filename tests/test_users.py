@@ -6,9 +6,9 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database import Base, get_db
-from main import app
-from models import User
+from app.database import Base, get_db
+from app.main import app
+from app.models import User
 import os
 
 # Use SQLite for testing (no external database needed)

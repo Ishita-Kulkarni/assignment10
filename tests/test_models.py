@@ -5,8 +5,8 @@ import pytest
 from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database import Base
-from models import User
+from app.database import Base
+from app.models import User
 
 
 # Create in-memory SQLite database for testing

@@ -5,10 +5,10 @@ from pydantic import BaseModel
 from typing import Optional
 from contextlib import asynccontextmanager
 import time
-from operations import calculate, DivisionByZeroError, InvalidOperationError
-from logger_config import setup_logging, get_logger
-from database import init_db
-from users import router as users_router
+from app.operations import calculate, DivisionByZeroError, InvalidOperationError
+from app.logger_config import setup_logging, get_logger
+from app.database import init_db
+from app.users import router as users_router
 
 # Initialize logging
 logger = setup_logging()

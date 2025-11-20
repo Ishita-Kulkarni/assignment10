@@ -7,10 +7,10 @@ import logging
 import os
 from pathlib import Path
 from unittest.mock import patch, MagicMock
-from logger_config import setup_logging, get_logger
-from operations import add, subtract, multiply, divide, calculate
+from app.logger_config import setup_logging, get_logger
+from app.operations import add, subtract, multiply, divide, calculate
 from fastapi.testclient import TestClient
-from main import app
+from app.main import app
 
 
 class TestLoggerConfiguration:

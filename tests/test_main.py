@@ -4,7 +4,7 @@ Tests all API endpoints with various scenarios
 """
 import pytest
 from fastapi.testclient import TestClient
-from main import app
+from app.main import app
 
 # Create test client
 client = TestClient(app)

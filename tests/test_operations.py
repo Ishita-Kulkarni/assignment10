@@ -3,7 +3,7 @@ Unit tests for operations.py
 Tests all calculator functions individually
 """
 import pytest
-from operations import (
+from app.operations import (
     add, subtract, multiply, divide, calculate,
     DivisionByZeroError, InvalidOperationError
 )

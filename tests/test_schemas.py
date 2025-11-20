@@ -4,7 +4,7 @@ Unit tests for Pydantic schemas.
 import pytest
 from pydantic import ValidationError
 from datetime import datetime
-from schemas import (
+from app.schemas import (
     UserCreate, UserResponse, UserLogin, UserUpdate, 
     UserRead, Token, Message
 )

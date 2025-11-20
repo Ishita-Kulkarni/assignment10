@@ -1,14 +1,20 @@
 # FastAPI User Management System
 
-[![CI/CD](https://github.com/YOUR_USERNAME/YOUR_REPO/workflows/FastAPI%20User%20Management%20CI/CD/badge.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO/actions)
+[![CI/CD](https://github.com/Ishita-Kulkarni/assignment10/workflows/FastAPI%20User%20Management%20CI/CD/badge.svg)](https://github.com/Ishita-Kulkarni/assignment10/actions)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
-[![Coverage](https://img.shields.io/badge/coverage-75%25-yellowgreen.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO)
+[![Coverage](https://img.shields.io/badge/coverage-75%25-yellowgreen.svg)](https://github.com/Ishita-Kulkarni/assignment10)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-Published-blue.svg)](https://hub.docker.com/)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-Published-blue.svg)](https://hub.docker.com/r/ishitak0803/fastapi-user-management)
 
 A production-ready FastAPI application featuring secure user management with SQLAlchemy, bcrypt password hashing, comprehensive testing (60 tests), and automated CI/CD pipeline with Docker Hub deployment.
+
+## 🔗 Quick Links
+
+- **GitHub Repository**: https://github.com/Ishita-Kulkarni/assignment10
+- **Docker Hub Image**: https://hub.docker.com/r/ishitak0803/fastapi-user-management
+- **CI/CD Pipeline**: https://github.com/Ishita-Kulkarni/assignment10/actions
 
 ## Features
 
@@ -56,8 +62,8 @@ A production-ready FastAPI application featuring secure user management with SQL
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
+git clone https://github.com/Ishita-Kulkarni/assignment10.git
+cd assignment10
 ```
 
 2. Configure environment variables:
@@ -86,6 +92,118 @@ docker compose up --build
 - Database: `calculator_db`
 - Username: `calculator_user`
 - Password: `calculator_pass`
+
+### Pull from Docker Hub
+
+Instead of building locally, you can pull the pre-built image:
+
+```bash
+# Pull the latest image from Docker Hub
+docker pull ishitak0803/fastapi-user-management:latest
+
+# Run the container
+docker run -d -p 8000:8000 \
+  -e DATABASE_URL=postgresql://calculator_user:calculator_pass@host.docker.internal:5432/calculator_db \
+  --name fastapi-app \
+  ishitak0803/fastapi-user-management:latest
+
+# Check if it's running
+docker ps
+
+# View logs
+docker logs fastapi-app
+
+# Access API docs
+open http://localhost:8000/docs
+```
+
+**Docker Hub Repository**: https://hub.docker.com/r/ishitak0803/fastapi-user-management
+
+**Available Tags**:
+- `latest` - Most recent build from main branch
+- `main` - Latest main branch build
+- `main-<commit-sha>` - Specific commit builds
+
+## Running Tests Locally
+
+### Quick Start
+
+```bash
+# 1. Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# 2. Install dependencies
+pip install -r requirements.txt
+pip install -r requirements-test.txt
+
+# 3. Run all tests
+pytest -v
+
+# 4. Run with coverage report
+pytest --cov=. --cov-report=html --cov-report=term-missing
+
+# 5. View coverage report
+open htmlcov/index.html  # On Linux: xdg-open htmlcov/index.html
+```
+
+### Test Categories
+
+```bash
+# Run user management tests only (60 tests)
+pytest tests/test_auth.py tests/test_schemas.py tests/test_models.py tests/test_users.py -v
+
+# Run authentication tests (12 tests)
+pytest tests/test_auth.py -v
+
+# Run schema validation tests (20 tests)
+pytest tests/test_schemas.py -v
+
+# Run model tests (10 tests)
+pytest tests/test_models.py -v
+
+# Run API integration tests (18 tests)
+pytest tests/test_users.py -v
+
+# Run specific test
+pytest tests/test_users.py::test_register_user -v
+```
+
+### Expected Results
+
+✅ **60 tests** should pass  
+✅ **75% coverage** overall  
+✅ **100% coverage** on `auth.py`, `schemas.py`, `models.py`  
+✅ **93% coverage** on `users.py`  
+
+### Test Output Example
+
+```
+tests/test_auth.py ✓✓✓✓✓✓✓✓✓✓✓✓                    [ 20%]
+tests/test_schemas.py ✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓         [ 53%]
+tests/test_models.py ✓✓✓✓✓✓✓✓✓✓                    [ 70%]
+tests/test_users.py ✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓             [100%]
+
+==================== 60 passed in 2.5s ====================
+```
+
+### Troubleshooting Tests
+
+If tests fail:
+
+```bash
+# Ensure correct bcrypt version (CRITICAL)
+pip install bcrypt==4.0.1
+
+# Clear pytest cache
+rm -rf .pytest_cache __pycache__
+
+# Reinstall dependencies
+pip install -r requirements.txt -r requirements-test.txt
+
+# Run tests with verbose output
+pytest -vv --tb=short
+```
 
 ## SQL Database Setup
 
@@ -595,14 +713,49 @@ Example platforms:
 
 ```
 fastapi-user-management/
-├── main.py                     # FastAPI application entry point
-├── database.py                 # SQLAlchemy database configuration
-├── models.py                   # User SQLAlchemy model
-├── schemas.py                  # Pydantic validation schemas
-├── auth.py                     # Password hashing utilities
-├── users.py                    # User management router
-├── operations.py               # Calculator operation functions
-├── logger_config.py            # Logging configuration
+├── app/                        # Application package
+│   ├── __init__.py             # Package initializer
+│   ├── main.py                 # FastAPI application entry point
+│   ├── database.py             # SQLAlchemy database configuration
+│   ├── models.py               # User SQLAlchemy model
+│   ├── schemas.py              # Pydantic validation schemas
+│   ├── auth.py                 # Password hashing utilities
+│   ├── users.py                # User management router
+│   ├── operations.py           # Calculator operation functions
+│   └── logger_config.py        # Logging configuration
+├── tests/                      # Test suite
+│   ├── __init__.py
+│   ├── test_auth.py            # Password hashing tests (12 tests)
+│   ├── test_schemas.py         # Pydantic schema tests (20 tests)
+│   ├── test_models.py          # SQLAlchemy model tests (10 tests)
+│   ├── test_users.py           # User API integration tests (18 tests)
+│   ├── test_operations.py      # Calculator tests (37 tests)
+│   ├── test_main.py            # Calculator API tests (37 tests)
+│   └── test_logging.py         # Logging tests (26 tests)
+├── docs/                       # Documentation
+│   ├── CI_CD_SETUP.md          # CI/CD setup guide
+│   ├── QUICK_REFERENCE.md      # Quick command reference
+│   ├── SETUP_CHECKLIST.md      # Setup checklist
+│   └── LOGGING.md              # Logging documentation
+├── scripts/                    # Utility scripts
+│   ├── run_tests.sh            # Test runner script
+│   └── ci_check.sh             # CI validation script
+├── sql/                        # SQL scripts (legacy)
+│   ├── README.md
+│   ├── 01_create_tables.sql
+│   ├── 02_insert_records.sql
+│   ├── 03_query_data.sql
+│   ├── 04_update_record.sql
+│   ├── 05_delete_record.sql
+│   └── complete_setup.sql
+├── logs/                       # Log files directory
+│   ├── app.log                 # Application logs
+│   └── error.log               # Error logs
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # CI/CD pipeline configuration
+├── static/                     # Static files (legacy)
+│   └── index.html              # Calculator web UI
 ├── requirements.txt            # Production dependencies
 ├── requirements-test.txt       # Test dependencies
 ├── Dockerfile                  # Docker container configuration

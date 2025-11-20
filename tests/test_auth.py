@@ -2,7 +2,7 @@
 Unit tests for authentication and password hashing functions.
 """
 import pytest
-from auth import hash_password, verify_password, get_password_hash
+from app.auth import hash_password, verify_password, get_password_hash
 
 
 class TestPasswordHashing:

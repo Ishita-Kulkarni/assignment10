@@ -4,11 +4,11 @@ User CRUD operations and authentication endpoints.
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from database import get_db
-from models import User
-from schemas import UserCreate, UserResponse, UserLogin, UserUpdate, Message
-from auth import hash_password, verify_password
-from logger_config import get_logger
+from app.database import get_db
+from app.models import User
+from app.schemas import UserCreate, UserResponse, UserLogin, UserUpdate, Message
+from app.auth import hash_password, verify_password
+from app.logger_config import get_logger
 
 logger = get_logger()
 
