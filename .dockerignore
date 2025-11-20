@@ -1,10 +1,61 @@
-# Docker Environment Files
+# Environment Files
 .env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+.hypothesis/
 
 # Database Files
 postgres_data/
+pgadmin_data/
 *.db
 *.sqlite3
 
-# pgAdmin Files
-pgadmin_data/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Documentation (optional - comment out if you want docs in image)
+*.md
+docs/
+
+# Logs
+logs/
+*.log
+
+# Test files (optional - comment out if you want to run tests in container)
+tests/
+requirements-test.txt
+pytest.ini
+.coveragerc
